@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Header from "./Header/Header";
+import Home from "./Home/Home";
+import Register from "./Register/Register";
+import Login from "./Login/Login";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import AuthProvider from "./context/AuthProvider";
 
 function App() {
+  document.title = "Firebase auth";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/home" component={Home} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/register">
+            <Register></Register>
+          </PrivateRoute>
+        </Switch>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
